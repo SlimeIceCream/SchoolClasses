@@ -1,0 +1,76 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace [Namespace]
+{
+    class List<T>
+    {
+        private Node<T> first;
+
+        public List()
+        {
+            this.first = null;
+        }
+
+        public Node<T> GetFirst()
+        {
+            return first;
+        }
+
+        public Node<T> Insert(Node<T> p, T info)
+        {
+            Node<T> q = new Node<T>(info);
+            if (p == null)
+            {
+                q.SetNext(first);
+                first = q;
+            }
+            else
+            {
+                q.SetNext(p.GetNext());
+                p.SetNext(q);
+            }
+            return q;
+        }
+
+        public Node<T> Remove(Node<T> p)
+        {
+            if (first == p)
+            {
+                first = p.GetNext();
+                return first;
+            }
+            else
+            {
+                Node<T> prev = first;
+                while (prev.GetNext() != p) prev = prev.GetNext();
+                prev.SetNext(p.GetNext());
+                return prev.GetNext();
+            }
+        }
+
+        public bool IsEmpty()
+        {
+            return first == null;
+        }
+
+        public override string ToString()
+        {
+            string s = "[";
+            Node<T> p = this.first;
+            while (p != null)
+            {
+                s = s + p.GetInfo().ToString();
+                if (p.GetNext() != null)
+                    s = s + ",";
+                p = p.GetNext();
+            }
+            s = s + "]";
+            return s;
+        }
+    }
+}
+
